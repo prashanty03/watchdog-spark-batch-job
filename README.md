@@ -3,7 +3,7 @@ Watchdog batch which runs every day to perform the analysis and store the result
 
 Schemas for the databases
 
-//Master device table 
+#Master device table 
 
 
 CREATE TABLE device (device_id text, device_name text, device_type text, channel text, active boolean, user_id text, primary key(device_id,device_type));
