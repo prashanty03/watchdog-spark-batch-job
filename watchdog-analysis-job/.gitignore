@@ -1,0 +1,10 @@
+.idea
+*.iml
+*.ipr
+*.iws
+/build
+.gradle
+/target
+/actitracker
+*.class
+.DS_Store
