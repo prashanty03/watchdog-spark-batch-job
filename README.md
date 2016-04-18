@@ -1,5 +1,7 @@
 # watchdog-spark-batch-job
 Watchdog batch which runs every day to perform the analysis and store the results in cassandra
+# Cassandra version required : dsc-cassandra-2.1.11
+# Spark-Cassandra-Java connector required : spark-cassandra-connector-java-assembly-1.3.0-SNAPSHOT
 
 #Schemas for the databases
 
