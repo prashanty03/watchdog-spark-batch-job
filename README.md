@@ -1,14 +1,14 @@
 # watchdog-spark-batch-job
 Watchdog batch which runs every day to perform the analysis and store the results in cassandra
 
-Schemas for the databases
+#Schemas for the databases
 
 #Master device table 
 
 
 CREATE TABLE device (device_id text, device_name text, device_type text, channel text, active boolean, user_id text, primary key(device_id,device_type));
 
-#Indexes for query purposes
+#Indexes on device for query purposes
 
 
 CREATE INDEX on watchdog.device (device_id);
