@@ -38,24 +38,24 @@ CREATE INDEX on watchdog.refrigerator (temperature);
 #Table for daily statistic analysis for avg temperature (Refrigerator)
 
 
-CREATE table dailystatisticsdata (device_id text,date text,dailyaverage double, primary key(device_id,date));
+CREATE table dailystatisticsrefrigeratordata (device_id text,date text,dailyaverage double, primary key(device_id,date));
 
-#Indexes on dailystatisticsdata for query purposes
+#Indexes on dailystatisticsrefrigeratordata for query purposes
 
 
-CREATE INDEX on watchdog.dailystatisticsdata (device_id);
-CREATE INDEX on watchdog.dailystatisticsdata (date);
-CREATE INDEX on watchdog.dailystatisticsdata (dailyaverage);
+CREATE INDEX on watchdog.dailystatisticsrefrigeratordata (device_id);
+CREATE INDEX on watchdog.dailystatisticsrefrigeratordata (date);
+CREATE INDEX on watchdog.dailystatisticsrefrigeratordata (dailyaverage);
 
 
 #Table for daily statistic analysis of all similar device for avg temperature (All Refrigerator)
 
 
-CREATE table dailystatisticsalldevice(device_type text, date text, dailyaverageall double, primary key (device_type,date));
+CREATE table dailystatisticsrefrigeratoralldevice(device_type text, date text, dailyaverageall double, primary key (device_type,date));
 
-#Indexes on dailystatisticsdata for query purposes
+#Indexes on dailystatisticsrefrigeratoralldata for query purposes
 
 
-CREATE INDEX on watchdog.dailystatisticsdata (device_type);
-CREATE INDEX on watchdog.dailystatisticsdata (date);
-CREATE INDEX on watchdog.dailystatisticsdata (dailyaverageall);
+CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldata (device_type);
+CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldata (date);
+CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldata (dailyaverageall);
