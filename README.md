@@ -8,7 +8,7 @@ Watchdog batch which runs every day to perform the analysis and store the result
 #Master device table 
 
 
-CREATE TABLE device (device_id text, device_name text, device_type text, channel text, active boolean, user_id text, primary key(device_id,device_type));
+CREATE TABLE device(device_id text, device_name text, device_type text, channel text, active boolean, user_id text, primary key(device_id,device_type));
 
 #Indexes on device for query purposes
 
@@ -22,7 +22,7 @@ CREATE INDEX on watcdog.device (device_name);
 #Table for refrigerator
 
 
-CREATE TABLE refrigerator (device_id text,device_type text,channel text, date text, time timestamp,temperature double, primary key((device_id,date),time));
+CREATE TABLE refrigerator(device_id text,device_type text,channel text, date text, time timestamp,temperature double, primary key((device_id,date),time));
 
 #Indexes on refrigerator for query purposes
 
@@ -38,7 +38,7 @@ CREATE INDEX on watchdog.refrigerator (temperature);
 #Table for daily statistic analysis for avg temperature (Refrigerator)
 
 
-CREATE table dailystatisticsrefrigeratordata (device_id text,date text,dailyaverage double, primary key(device_id,date));
+CREATE table dailystatisticsrefrigeratordata(device_id text,date text,dailyaverage double, primary key(device_id,date));
 
 #Indexes on dailystatisticsrefrigeratordata for query purposes
 
@@ -56,6 +56,6 @@ CREATE table dailystatisticsrefrigeratoralldevice(device_type text, date text, d
 #Indexes on dailystatisticsrefrigeratoralldata for query purposes
 
 
-CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldata (device_type);
-CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldata (date);
-CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldata (dailyaverageall);
+CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldevice (device_type);
+CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldevice (date);
+CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldevice (dailyaverageall);
