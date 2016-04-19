@@ -125,7 +125,7 @@ public static  void performDailyAllFridgeTempAnalysis(JavaRDD<String> differentD
 		      "VALUES (?, ?, ?);");
 	boundStatement = new BoundStatement(statement);
 	 
-	session.execute(boundStatement.bind("refrigerator",today,avg));
+	session.execute(boundStatement.bind(DeviceTypes.REFRIGERATOR.toString(),today,avg));
 
 }
 }
