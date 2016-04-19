@@ -41,7 +41,7 @@ public static  void performInitialFridgeTempAnalysis(JavaRDD<String> differentDe
     	
     	
     // Inserting average temperature data for specific devices daily
-    	statement = session.prepare("INSERT INTO dog.dailystatisticsdata " +
+    	statement = session.prepare("INSERT INTO dog.dailystatisticsRefrigeratordata " +
   		      "(device_id, date, dailyaverage) " +
   		      "VALUES (?, ?, ?);");
   	boundStatement = new BoundStatement(statement);
@@ -72,7 +72,7 @@ public static  void performDailyFridgeTempAnalysis(JavaRDD<String> differentDevi
     	System.out.println(avg);
     	
     	// Inserting average temperature data for specific devices for initial run
-    	statement = session.prepare("INSERT INTO dog.dailystatisticsdata " +
+    	statement = session.prepare("INSERT INTO dog.dailystatisticsRefrigeratordata " +
   		      "(device_id, date, dailyaverage) " +
   		      "VALUES (?, ?, ?);");
   	boundStatement = new BoundStatement(statement);
@@ -120,7 +120,7 @@ public static  void performDailyAllFridgeTempAnalysis(JavaRDD<String> differentD
    System.out.println(count);
    System.out.println(avg);
 	// Inserting average temperature data for specific devices for initial run
-	statement = session.prepare("INSERT INTO dog.dailystatisticsalldevice " +
+	statement = session.prepare("INSERT INTO dog.dailystatisticsRefrigeratoralldevice " +
 		      "(device_type, date, dailyaverageall) " +
 		      "VALUES (?, ?, ?);");
 	boundStatement = new BoundStatement(statement);
