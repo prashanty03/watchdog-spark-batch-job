@@ -94,51 +94,40 @@ public static  void performDailyTelevisionUsageAnalysis(JavaRDD<String> differen
 }
 
 
-public static  void performDailyAllFridgeTempAnalysis(JavaRDD<String> differentDevices,LocalDate myDateTime, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) 
+
+public static  void performDailyAllelevisionUsageAnalysis(JavaRDD<String> differentDevices,LocalDate myDateTime, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) 
 {
-	String today = myDateTime.toString(); 
-	double avg = 0;
-	long count =0;
+    String today = myDateTime.toString(); 
+    int minutesActiveTv = 0;
+    double hoursActiveTv =0;
    for (String differentTv : differentDevices.toArray()) {
-    	
-    	String StatementCheck = "device_id= \'" + differentTv+ "\'  AND date = \'"+ today +"\'";
-    	//String StatementCheck1 = "device_id= \'" + differentTv+ "\'  AND date = '2016-04-17'";
-    	//System.out.println(StatementCheck1);
-    	JavaRDD<Double> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Double.class))
-    			.select("status")
-    			.where(StatementCheck);
-    	deviceRow1.toArray().forEach(System.out::println);
-    	deviceRow1.toArray().forEach(System.out::println);
-    	
-    	for (Double cassandraRow : deviceRow1.toArray()) {
-    			avg += cassandraRow;
-    	}
-    	//System.out.println(avg);
-    	
-    	count = count + deviceRow1.count();
-    	
-    	//System.out.println(avg);
-    	
-    	// Inserting average temperature data for specific devices for initial run
-//    	statement = session.prepare("INSERT INTO dog.dailystatisticsdata " +
-//  		      "(device_id, date, dailyaverage) " +
-//  		      "VALUES (?, ?, ?);");
-//  	boundStatement = new BoundStatement(statement);
-//  	session.execute(boundStatement.bind(differentTv,today,avg));
-	
+        
+        String StatementCheck = "device_id= \'" + differentTv+ "\'  AND date = \'"+ today +"\'";
+        String StatementCheck1 = "device_id= \'" + differentTv+ "\'  AND date = '2016-04-17'";
+        //System.out.println(StatementCheck1);
+        JavaRDD<Double> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Double.class))
+                .select("status")
+                .where(StatementCheck1);
+        deviceRow1.toArray().forEach(System.out::println);
+        deviceRow1.toArray().forEach(System.out::println);
+        
+        for (Double cassandraRow : deviceRow1.toArray()) {
+            minutesActiveTv +=cassandraRow;
+        }
+        
     }
    
-   avg= avg/(count);
-   System.out.println(count);
-   System.out.println(avg);
-	// Inserting average temperature data for specific devices for initial run
-	statement = session.prepare("INSERT INTO dog.dailystatisticsRefrigeratoralldevice" +
-		      "(device_type, date, dailyaverageall) " +
-		      "VALUES (?, ?, ?);");
-	boundStatement = new BoundStatement(statement);
-	 
-	session.execute(boundStatement.bind("refrigerator",today,avg));
+   hoursActiveTv= (double)minutesActiveTv/60;
+   System.out.println(minutesActiveTv);
+   System.out.println(hoursActiveTv);
+   
+    // Inserting average television usage for all televisions daily
+    statement = session.prepare("INSERT INTO dog.dailystatisticstelevisionalldevice" +
+              "(device_type, date, dailyusage) " +
+              "VALUES (?, ?, ?);");
+    boundStatement = new BoundStatement(statement);
+     
+    session.execute(boundStatement.bind(DeviceTypes.TELEVISION.toString(),today,hoursActiveTv));
 
 }
-
 }

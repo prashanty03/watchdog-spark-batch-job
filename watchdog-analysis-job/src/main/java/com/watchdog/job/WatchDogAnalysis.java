@@ -59,7 +59,7 @@ public static void main(String[] args) {
     //Analysis method calls for Televisions
     TelevisionAnalysisFunction.performInitialTelevisionUsageAnalysis(differentTelevisionDevices, datesForIntialTelevisionRun, session, boundStatement, statement, sc);
     TelevisionAnalysisFunction.performDailyTelevisionUsageAnalysis(differentTelevisionDevices, locale, session, boundStatement, statement, sc);
-    cluster.close();
+    TelevisionAnalysisFunction.performDailyAllelevisionUsageAnalysis(differentTelevisionDevices, locale, session, boundStatement, statement, sc);
 cluster.close();
 }
 
