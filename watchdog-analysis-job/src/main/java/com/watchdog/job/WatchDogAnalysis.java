@@ -53,7 +53,9 @@ public static void main(String[] args) {
     //Analysis method calls for Refrigerator
     RefrigeratorAnalysisFunction.performInitialFridgeTempAnalysis(differentRefrigeratorDevices, datesForIntialRefrigeratorRun, session, boundStatement, statement, sc);      
     RefrigeratorAnalysisFunction.performDailyFridgeTempAnalysis(differentRefrigeratorDevices, locale, session, boundStatement, statement, sc);
+    RefrigeratorAnalysisFunction.performInitalAllFridgeTempAnalysis(differentRefrigeratorDevices,datesForIntialRefrigeratorRun, session, boundStatement, statement, sc);
     RefrigeratorAnalysisFunction.performDailyAllFridgeTempAnalysis(differentRefrigeratorDevices,locale, session, boundStatement, statement, sc);
+
 
     
     //Analysis method calls for Televisions

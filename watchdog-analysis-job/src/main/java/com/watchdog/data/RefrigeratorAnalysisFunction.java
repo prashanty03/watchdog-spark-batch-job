@@ -128,4 +128,47 @@ public static  void performDailyAllFridgeTempAnalysis(JavaRDD<String> differentD
 	session.execute(boundStatement.bind(DeviceTypes.REFRIGERATOR.toString(),today,avg));
 
 }
+
+public static  void performInitalAllFridgeTempAnalysis(JavaRDD<String> differentDevices,JavaRDD<String> deviceDate, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) 
+{
+ for (String deviceDataDate : deviceDate.toArray()) {
+     double avg = 0;
+        long count =0;
+   for (String differentTv : differentDevices.toArray()) {
+        String StatementCheck = "device_id= \'" + differentTv+ "\'  AND date = \'"+ deviceDataDate +"\'";
+        //String StatementCheck1 = "device_id= \'" + differentTv+ "\'  AND date = '2016-04-17'";
+    System.out.println(StatementCheck);
+        JavaRDD<Double> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "refrigerator", mapColumnTo(Double.class))
+                .select("temperature")
+                .where(StatementCheck);
+        deviceRow1.toArray().forEach(System.out::println);
+        //deviceRow1.toArray().forEach(System.out::println);
+        
+        for (Double cassandraRow : deviceRow1.toArray()) {
+                avg += cassandraRow;
+        }
+        //System.out.println(avg);
+        
+        count = count + deviceRow1.count();
+    
+    }
+   avg= avg/(count);
+   System.out.println(count);
+    System.out.println(avg);
+   statement = session.prepare("INSERT INTO dog.dailystatisticsalldevice" +
+              "(device_type, date, dailyaverageall) " +
+              "VALUES (?, ?, ?);");
+    boundStatement = new BoundStatement(statement);
+    
+       
+    session.execute(boundStatement.bind(DeviceTypes.REFRIGERATOR.toString(),deviceDataDate,avg));
+   }
+   
+   
+    // Inserting average temperature data for specific devices for initial run
+    
+
+}
+
+
 }
