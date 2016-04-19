@@ -40,10 +40,27 @@ public static void main(String[] args) {
     JavaRDD<String> differentDevices = javaFunctions(sc).cassandraTable("dog", "refrigerator", mapColumnTo(String.class)).select("device_id").distinct();
     differentDevices.toArray().forEach(System.out::println);
     JavaRDD<String> datesForIntialRun = javaFunctions(sc).cassandraTable("dog", "refrigerator", mapColumnTo(String.class)).select("date").distinct();
-    RefrigeratorAnalysisFunction.performInitialFridgeTempAnalysis(differentDevices, datesForIntialRun, session, boundStatement, statement, sc);
-    RefrigeratorAnalysisFunction.performDailyFridgeTempAnalysis(differentDevices, locale, session, boundStatement, statement, sc);
-   RefrigeratorAnalysisFunction.performDailyAllFridgeTempAnalysis(differentDevices,locale, session, boundStatement, statement, sc);
+    //Analysis system for televisions
+    JavaRDD<String> differentTelevisionDevices = javaFunctions(sc).cassandraTable("dog", "television", mapColumnTo(String.class)).select("device_id").distinct();
+    differentTelevisionDevices.toArray().forEach(System.out::println);
+    JavaRDD<String> datesForIntialTelevisionRun = javaFunctions(sc).cassandraTable("dog", "television", mapColumnTo(String.class)).select("date").distinct();
+    
+    
+//    JavaRDD<String> justCheckUser_id = javaFunctions(sc).cassandraTable("dog", "device", mapColumnTo(String.class)).select("user_id")
+//    		.where("user_id=?",'1');
+//    justCheckUser_id.toArray().forEach(System.out::println);
+    
+    //Analysis method calls for Refrigerator
+    RefrigeratorAnalysisFunction.performInitialFridgeTempAnalysis(differentRefrigeratorDevices, datesForIntialRefrigeratorRun, session, boundStatement, statement, sc);      
+    RefrigeratorAnalysisFunction.performDailyFridgeTempAnalysis(differentRefrigeratorDevices, locale, session, boundStatement, statement, sc);
+    RefrigeratorAnalysisFunction.performDailyAllFridgeTempAnalysis(differentRefrigeratorDevices,locale, session, boundStatement, statement, sc);
+
+    
+    //Analysis method calls for Televisions
+    TelevisionAnalysisFunction.performInitialTelevisionUsageAnalysis(differentTelevisionDevices, datesForIntialTelevisionRun, session, boundStatement, statement, sc);
+    TelevisionAnalysisFunction.performDailyTelevisionUsageAnalysis(differentTelevisionDevices, locale, session, boundStatement, statement, sc);
     cluster.close();
+cluster.close();
 }
 
 }
