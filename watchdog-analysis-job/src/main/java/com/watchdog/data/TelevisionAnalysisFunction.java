@@ -97,41 +97,42 @@ public static  void performDailyTelevisionUsageAnalysis(JavaRDD<String> differen
 
 
 //Perform  daily usage analysis for all Televisions
-public static  void performDailyAllelevisionUsageAnalysis(JavaRDD<String> differentDevices,LocalDate myDateTime, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) 
+public static void performDailyAllelevisionUsageAnalysis(JavaRDD<String> differentTelevisionDevices,LocalDate myDateTime, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) 
 {
-    String today = myDateTime.toString(); 
-    int minutesActiveTv = 0;
-    double hoursActiveTv =0;
-   for (String differentTv : differentDevices.toArray()) {
-        
-        String StatementCheck = "device_id= \'" + differentTv+ "\'  AND date = \'"+ today +"\'";
-        //System.out.println(StatementCheck1);
-        JavaRDD<Double> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Double.class))
-                .select("status")
-                .where(StatementCheck);
-        deviceRow1.toArray().forEach(System.out::println);
-        deviceRow1.toArray().forEach(System.out::println);
-        
-        for (Double cassandraRow : deviceRow1.toArray()) {
-            minutesActiveTv +=cassandraRow;
-        }
-        
+  String today = myDateTime.toString(); 
+  int minutesActiveTv = 0;
+  double hoursActiveTv =0;
+  int numberOfTelevision = 0;
+   for (String differentTv : differentTelevisionDevices.toArray()) {
+      numberOfTelevision++;
+      String StatementCheck = "device_id= \'" + differentTv+ "\'  AND date = \'"+ today +"\'";
+      //System.out.println(StatementCheck1);
+      JavaRDD<Double> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Double.class))
+          .select("status")
+          .where(StatementCheck);
+      deviceRow1.toArray().forEach(System.out::println);
+      deviceRow1.toArray().forEach(System.out::println);
+      
+      for (Double cassandraRow : deviceRow1.toArray()) {
+        minutesActiveTv +=cassandraRow;
+      }
+      
     }
    
    hoursActiveTv= (double)minutesActiveTv/60;
+   hoursActiveTv = hoursActiveTv/numberOfTelevision;
    System.out.println(minutesActiveTv);
    System.out.println(hoursActiveTv);
    
-    // Inserting average television usage for all televisions daily
-    statement = session.prepare("INSERT INTO dog.dailystatisticstelevisionalldevice" +
-              "(device_type, date, dailyusage) " +
-              "VALUES (?, ?, ?);");
-    boundStatement = new BoundStatement(statement);
-     
-    session.execute(boundStatement.bind(DeviceTypes.TELEVISION.toString(),today,hoursActiveTv));
+  // Inserting average television usage for all televisions daily
+  statement = session.prepare("INSERT INTO dog.dailystatisticstelevisionalldevice" +
+          "(device_type, date, dailyusage) " +
+          "VALUES (?, ?, ?);");
+  boundStatement = new BoundStatement(statement);
+   
+  session.execute(boundStatement.bind(DeviceTypes.TELEVISION.toString(),today,hoursActiveTv));
 
 }
-
 
 
 
@@ -141,29 +142,26 @@ public static void performInitalAllTelevisionUsgaeAnalysis(JavaRDD<String> diffe
  for (String deviceDataDate : deviceTelevisionDate.toArray()) {
       int minutesActiveTv = 0;
     double hoursActiveTv =0;
+    int numberOfTelevisions =0;
    for (String differentTv : differentTelevisionDevices.toArray()) {
-     
-      String StatementCheck = "device_id= \'" + differentTv+ "\'  AND date = \'"+ deviceDataDate +"\'";
-      System.out.println(StatementCheck);
-      JavaRDD<Double> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Double.class))
-          .select("status")
-          .where(StatementCheck);
-      deviceRow1.toArray().forEach(System.out::println);
-      //deviceRow1.toArray().forEach(System.out::println);
-      
-      for (Double cassandraRow : deviceRow1.toArray()) {
-        minutesActiveTv +=cassandraRow;
+        numberOfTelevisions++;
+        String StatementCheck = "device_id= \'" + differentTv+ "\'  AND date = \'"+ deviceDataDate +"\'";
+        System.out.println(StatementCheck);
+        JavaRDD<Double> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Double.class))
+            .select("status")
+            .where(StatementCheck);
+        for (Double cassandraRow : deviceRow1.toArray()) {
+          minutesActiveTv +=cassandraRow;
+          
+        }
         
-      }
-      
-      hoursActiveTv= (double)minutesActiveTv/60;
+        hoursActiveTv= (double)minutesActiveTv/60;
+        hoursActiveTv = hoursActiveTv/numberOfTelevisions;
       
          statement = session.prepare("INSERT INTO dog.dailystatisticstelevisionalldevice" +
                 "(device_type, date, dailyusage) " +
                 "VALUES (?, ?, ?);");
         boundStatement = new BoundStatement(statement);
-        
-           
         session.execute(boundStatement.bind(DeviceTypes.TELEVISION.toString(),deviceDataDate,hoursActiveTv));
     
     }
