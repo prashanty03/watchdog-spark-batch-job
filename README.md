@@ -20,15 +20,11 @@ CREATE TABLE device(device_id text, device_name text, device_type text, channel 
 
 CREATE INDEX on dog.device (device_name);
 
-
 CREATE INDEX on dog.device (active);
-
 
 CREATE INDEX on dog.device (user_id);
 
-
 CREATE INDEX on dog.device (device_type);
-
 
 CREATE INDEX on dog.device (channel);
 
@@ -42,15 +38,11 @@ CREATE TABLE refrigerator(device_id text,device_type text,channel text, date tex
 
 CREATE INDEX on dog.refrigerator (device_type);
 
-
 CREATE INDEX on dog.refrigerator (channel);
-
 
 CREATE INDEX on dog.refrigerator (date);
 
-
 CREATE INDEX on dog.refrigerator (time);
-
 
 CREATE INDEX on dog.refrigerator (temperature);
 
@@ -65,12 +57,9 @@ CREATE table dailystatisticsrefrigeratordata(device_id text,date text,dailyavera
 #Indexes on dailystatisticsrefrigeratordata for query purposes
 
 
-
 CREATE INDEX on dog.dailystatisticsrefrigeratordata (date);
 
-
 CREATE INDEX on dog.dailystatisticsrefrigeratordata (dailyaverage);
-
 
 
 
@@ -80,11 +69,53 @@ CREATE INDEX on dog.dailystatisticsrefrigeratordata (dailyaverage);
 
 CREATE table dailystatisticsrefrigeratoralldevice(device_type text, date text, dailyaverageall double, primary key (device_type,date));
 
-#Indexes on dailystatisticsrefrigeratoralldata for query purposes
-
+#Indexes on dailystatisticsrefrigeratoralldevice for query purposes
 
 
 CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (date);
 
-
 CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (dailyaverageall);
+
+
+#Table for Television
+
+CREATE TABLE television (device_id text,device_type text,channel text, date text, time timestamp,status int, primary key((device_id,date),time));
+
+
+#Indexex on Television table for query purposes
+
+CREATE INDEX on dog.television (device_type);
+
+CREATE INDEX on dog.television (channel);
+
+CREATE INDEX on dog.television (date);
+
+CREATE INDEX on dog.television (time);
+
+CREATE INDEX on dog.television (status);
+
+
+#Table for daily statistic analysis for television data
+
+create table dog.dailystatisticstelevisiondata(device_id text,date text,dailyusage double, primary key(device_id,date));
+
+
+#Indexex on Television table for query purposes
+
+
+CREATE INDEX on dog.dailystatisticstelevisiondata (date);
+
+CREATE INDEX on dog.dailystatisticstelevisiondata (dailyusage);
+
+
+#Table for daily statistic analysis of all similar device for avg usage (All Televisions)
+
+create table dailystatisticstelevisionalldevice(device_type text, date text, dailyusage double, primary key (device_type,date))
+
+
+#Indexes on dailystatisticstelevisionalldevice for query purposes
+
+CREATE INDEX on dog.dailystatisticstelevisionalldevice (date);
+
+CREATE INDEX on dog.dailystatisticstelevisionalldevice (dailyusage);
+
