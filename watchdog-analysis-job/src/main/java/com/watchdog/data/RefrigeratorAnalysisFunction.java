@@ -19,6 +19,8 @@ import com.datastax.driver.core.Session;
 
 public class RefrigeratorAnalysisFunction {
 	
+
+
 	//Perform initial temperature average analysis for Refrigerators
 public static  void performInitialFridgeTempAnalysis(JavaRDD<String> differentDevices,JavaRDD<String> deviceDate, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) {
 	   
@@ -51,8 +53,9 @@ public static  void performInitialFridgeTempAnalysis(JavaRDD<String> differentDe
 }
 
 
-//Perform daily temperature average analysis for Refrigerators
 
+
+//Perform daily temperature average analysis for Refrigerators
 public static  void performDailyFridgeTempAnalysis(JavaRDD<String> differentDevices,LocalDate myDateTime, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) {
 	String today = myDateTime.toString(); 
     for (String differentTv : differentDevices.toArray()) {
@@ -82,6 +85,9 @@ public static  void performDailyFridgeTempAnalysis(JavaRDD<String> differentDevi
 }
 
 
+
+
+//Perform daily average temperature analysis for all Refrigerators
 public static  void performDailyAllFridgeTempAnalysis(JavaRDD<String> differentDevices,LocalDate myDateTime, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) 
 {
 	String today = myDateTime.toString(); 
@@ -104,15 +110,6 @@ public static  void performDailyAllFridgeTempAnalysis(JavaRDD<String> differentD
     	//System.out.println(avg);
     	
     	count = count + deviceRow1.count();
-    	
-    	//System.out.println(avg);
-    	
-    	// Inserting average temperature data for specific devices for initial run
-//    	statement = session.prepare("INSERT INTO dog.dailystatisticsdata " +
-//  		      "(device_id, date, dailyaverage) " +
-//  		      "VALUES (?, ?, ?);");
-//  	boundStatement = new BoundStatement(statement);
-//  	session.execute(boundStatement.bind(differentTv,today,avg));
 	
     }
    
@@ -129,6 +126,10 @@ public static  void performDailyAllFridgeTempAnalysis(JavaRDD<String> differentD
 
 }
 
+
+
+
+//Perform initial average temperature analysis for all Refrigerators
 public static  void performInitalAllFridgeTempAnalysis(JavaRDD<String> differentDevices,JavaRDD<String> deviceDate, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) 
 {
  for (String deviceDataDate : deviceDate.toArray()) {

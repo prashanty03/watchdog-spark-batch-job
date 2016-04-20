@@ -14,6 +14,7 @@ import com.datastax.driver.core.Session;
 
 public class TelevisionAnalysisFunction {
 	
+
 	
 	//Perform initial usage average analysis for Televisions
 public static  void performInitialTelevisionUsageAnalysis(JavaRDD<String> differentTelevisionDevices,JavaRDD<String> deviceTelevisionDate, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) {
@@ -26,8 +27,6 @@ public static  void performInitialTelevisionUsageAnalysis(JavaRDD<String> differ
     	JavaRDD<Integer> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Integer.class))
     			.select("status")
     			.where(StatementCheck);
-//    	System.out.println(StatementCheck);
-//    	System.out.println(deviceRow1.count());
     	deviceRow1.toArray().forEach(System.out::println);
     	int minutesActiveTv =0;
     	double hoursActiveTv =0;
@@ -55,8 +54,9 @@ public static  void performInitialTelevisionUsageAnalysis(JavaRDD<String> differ
 }
 
 
-//Perform daily usage analysis for Televisions
 
+
+//Perform daily usage analysis for Televisions
 public static  void performDailyTelevisionUsageAnalysis(JavaRDD<String> differentDevices,LocalDate myDateTime, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) {
 	String today = myDateTime.toString(); 
     for (String differentTv : differentDevices.toArray()) {
@@ -66,8 +66,7 @@ public static  void performDailyTelevisionUsageAnalysis(JavaRDD<String> differen
     	JavaRDD<Integer> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Integer.class))
     			.select("status")
     			.where(StatementCheck);
-//    	System.out.println(StatementCheck);
-//    	System.out.println(deviceRow1.count());
+
     	deviceRow1.toArray().forEach(System.out::println);
     	int minutesActiveTv =0;
     	double hoursActiveTv =0;
@@ -95,6 +94,9 @@ public static  void performDailyTelevisionUsageAnalysis(JavaRDD<String> differen
 
 
 
+
+
+//Perform  daily usage analysis for all Televisions
 public static  void performDailyAllelevisionUsageAnalysis(JavaRDD<String> differentDevices,LocalDate myDateTime, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) 
 {
     String today = myDateTime.toString(); 
@@ -130,4 +132,46 @@ public static  void performDailyAllelevisionUsageAnalysis(JavaRDD<String> differ
     session.execute(boundStatement.bind(DeviceTypes.TELEVISION.toString(),today,hoursActiveTv));
 
 }
+
+
+
+
+//Perform initial usage analysis for all Televisions
+public static void performInitalAllTelevisionUsgaeAnalysis(JavaRDD<String> differentTelevisionDevices,JavaRDD<String> deviceTelevisionDate, Session session, BoundStatement boundStatement, PreparedStatement statement, JavaSparkContext javaSparkContext) 
+{
+ for (String deviceDataDate : deviceTelevisionDate.toArray()) {
+      int minutesActiveTv = 0;
+    double hoursActiveTv =0;
+   for (String differentTv : differentTelevisionDevices.toArray()) {
+     
+      String StatementCheck = "device_id= \'" + differentTv+ "\'  AND date = \'"+ deviceDataDate +"\'";
+      System.out.println(StatementCheck);
+      JavaRDD<Double> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Double.class))
+          .select("status")
+          .where(StatementCheck);
+      deviceRow1.toArray().forEach(System.out::println);
+      //deviceRow1.toArray().forEach(System.out::println);
+      
+      for (Double cassandraRow : deviceRow1.toArray()) {
+        minutesActiveTv +=cassandraRow;
+        
+      }
+      
+      hoursActiveTv= (double)minutesActiveTv/60;
+      
+         statement = session.prepare("INSERT INTO dog.dailystatisticstelevisionalldevice" +
+                "(device_type, date, dailyusage) " +
+                "VALUES (?, ?, ?);");
+        boundStatement = new BoundStatement(statement);
+        
+           
+        session.execute(boundStatement.bind(DeviceTypes.TELEVISION.toString(),deviceDataDate,hoursActiveTv));
+    
+    }
+  
+   }
+
+}
+
+
 }
