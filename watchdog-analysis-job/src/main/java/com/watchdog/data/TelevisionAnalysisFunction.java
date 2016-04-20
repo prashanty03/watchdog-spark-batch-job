@@ -105,11 +105,10 @@ public static  void performDailyAllelevisionUsageAnalysis(JavaRDD<String> differ
    for (String differentTv : differentDevices.toArray()) {
         
         String StatementCheck = "device_id= \'" + differentTv+ "\'  AND date = \'"+ today +"\'";
-        String StatementCheck1 = "device_id= \'" + differentTv+ "\'  AND date = '2016-04-17'";
         //System.out.println(StatementCheck1);
         JavaRDD<Double> deviceRow1 = javaFunctions(javaSparkContext).cassandraTable("dog", "television", mapColumnTo(Double.class))
                 .select("status")
-                .where(StatementCheck1);
+                .where(StatementCheck);
         deviceRow1.toArray().forEach(System.out::println);
         deviceRow1.toArray().forEach(System.out::println);
         
