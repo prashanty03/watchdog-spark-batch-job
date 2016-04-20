@@ -1,4 +1,4 @@
-# watchdog-spark-batch-job
+# Watcgdog-spark-batch-job
 Watchdog batch which runs every day to perform the analysis and store the results in cassandra
 # Cassandra version required : dsc-cassandra-2.1.11
 # Spark-Cassandra-Java connector required : spark-cassandra-connector-java-assembly-1.3.0-SNAPSHOT
@@ -13,11 +13,11 @@ CREATE TABLE device(device_id text, device_name text, device_type text, channel 
 #Indexes on device for query purposes
 
 
-CREATE INDEX on watchdog.device (device_id);
-CREATE INDEX on watchdog.device (device_name);
-CREATE INDEX on watchdog.device (active);
-CREATE INDEX on watchdog.device (user_id);
-CREATE INDEX on watcdog.device (device_name);
+CREATE INDEX on dog.device (device_id);
+CREATE INDEX on dog.device (device_name);
+CREATE INDEX on dog.device (active);
+CREATE INDEX on dog.device (user_id);
+CREATE INDEX on dog.device (device_name);
 
 #Table for refrigerator
 
@@ -27,12 +27,12 @@ CREATE TABLE refrigerator(device_id text,device_type text,channel text, date tex
 #Indexes on refrigerator for query purposes
 
 
-CREATE INDEX on watchdog.refrigerator (device_id);
-CREATE INDEX on watchdog.refrigerator (device_type);
-CREATE INDEX on watchdog.refrigerator (channel);
-CREATE INDEX on watchdog.refrigerator (date);
-CREATE INDEX on watchdog.refrigerator (time);
-CREATE INDEX on watchdog.refrigerator (temperature);
+CREATE INDEX on dog.refrigerator (device_id);
+CREATE INDEX on dog.refrigerator (device_type);
+CREATE INDEX on dog.refrigerator (channel);
+CREATE INDEX on dog.refrigerator (date);
+CREATE INDEX on dog.refrigerator (time);
+CREATE INDEX on dog.refrigerator (temperature);
 
 
 #Table for daily statistic analysis for avg temperature (Refrigerator)
@@ -43,9 +43,9 @@ CREATE table dailystatisticsrefrigeratordata(device_id text,date text,dailyavera
 #Indexes on dailystatisticsrefrigeratordata for query purposes
 
 
-CREATE INDEX on watchdog.dailystatisticsrefrigeratordata (device_id);
-CREATE INDEX on watchdog.dailystatisticsrefrigeratordata (date);
-CREATE INDEX on watchdog.dailystatisticsrefrigeratordata (dailyaverage);
+CREATE INDEX on dog.dailystatisticsrefrigeratordata (device_id);
+CREATE INDEX on dog.dailystatisticsrefrigeratordata (date);
+CREATE INDEX on dog.dailystatisticsrefrigeratordata (dailyaverage);
 
 
 #Table for daily statistic analysis of all similar device for avg temperature (All Refrigerator)
@@ -56,6 +56,6 @@ CREATE table dailystatisticsrefrigeratoralldevice(device_type text, date text, d
 #Indexes on dailystatisticsrefrigeratoralldata for query purposes
 
 
-CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldevice (device_type);
-CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldevice (date);
-CREATE INDEX on watchdog.dailystatisticsrefrigeratoralldevice (dailyaverageall);
+CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (device_type);
+CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (date);
+CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (dailyaverageall);
