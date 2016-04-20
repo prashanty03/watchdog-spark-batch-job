@@ -3,6 +3,11 @@ Watchdog batch which runs every day to perform the analysis and store the result
 # Cassandra version required : dsc-cassandra-2.1.11
 # Spark-Cassandra-Java connector required : spark-cassandra-connector-java-assembly-1.3.0-SNAPSHOT
 
+#Keyspace
+
+
+CREATE KEYSPACE dog WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+
 #Schemas for the databases
 
 #Master device table 
