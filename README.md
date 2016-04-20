@@ -14,9 +14,17 @@ CREATE TABLE device(device_id text, device_name text, device_type text, channel 
 
 
 CREATE INDEX on dog.device (device_id);
+
+
 CREATE INDEX on dog.device (device_name);
+
+
 CREATE INDEX on dog.device (active);
+
+
 CREATE INDEX on dog.device (user_id);
+
+
 CREATE INDEX on dog.device (device_name);
 
 #Table for refrigerator
@@ -28,10 +36,20 @@ CREATE TABLE refrigerator(device_id text,device_type text,channel text, date tex
 
 
 CREATE INDEX on dog.refrigerator (device_id);
+
+
 CREATE INDEX on dog.refrigerator (device_type);
+
+
 CREATE INDEX on dog.refrigerator (channel);
+
+
 CREATE INDEX on dog.refrigerator (date);
+
+
 CREATE INDEX on dog.refrigerator (time);
+
+
 CREATE INDEX on dog.refrigerator (temperature);
 
 
@@ -44,7 +62,11 @@ CREATE table dailystatisticsrefrigeratordata(device_id text,date text,dailyavera
 
 
 CREATE INDEX on dog.dailystatisticsrefrigeratordata (device_id);
+
+
 CREATE INDEX on dog.dailystatisticsrefrigeratordata (date);
+
+
 CREATE INDEX on dog.dailystatisticsrefrigeratordata (dailyaverage);
 
 
@@ -57,5 +79,9 @@ CREATE table dailystatisticsrefrigeratoralldevice(device_type text, date text, d
 
 
 CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (device_type);
+
+
 CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (date);
+
+
 CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (dailyaverageall);
