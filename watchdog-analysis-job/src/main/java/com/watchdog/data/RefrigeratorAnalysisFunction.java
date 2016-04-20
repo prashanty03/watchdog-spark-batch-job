@@ -41,14 +41,14 @@ public static  void performInitialFridgeTempAnalysis(JavaRDD<String> differentDe
     	avg= avg/(deviceRow1.count());
     	System.out.println(avg);
     	
-        if (avg>=0) {
+        //if (avg>=0) {
     // Inserting average temperature data for specific devices daily
         statement = session.prepare("INSERT INTO dog.dailystatisticsrefrigeratordata " +
               "(device_id, date, dailyaverage) " +
               "VALUES (?, ?, ?);");
         boundStatement = new BoundStatement(statement);
         session.execute(boundStatement.bind(differentTv,deviceDataDate,avg));        
-        }
+        //}
 	}
     }
 }
@@ -75,14 +75,14 @@ public static  void performDailyFridgeTempAnalysis(JavaRDD<String> differentDevi
     	avg= avg/(deviceRow1.count());
     	System.out.println(avg);
     	
-        if (avg>=0) {
+        //if (avg>=0) {
         // Inserting average temperature data for specific devices for initial run
         statement = session.prepare("INSERT INTO dog.dailystatisticsrefrigeratordata " +
               "(device_id, date, dailyaverage) " +
               "VALUES (?, ?, ?);");
         boundStatement = new BoundStatement(statement);
         session.execute(boundStatement.bind(differentTv,today,avg));    
-        }	
+       // }	
 	
     }
 }
