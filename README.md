@@ -3,15 +3,19 @@ Watchdog batch which runs every day to perform the analysis and store the result
 # Cassandra version required : dsc-cassandra-2.1.11
 # Spark-Cassandra-Java connector required : spark-cassandra-connector-java-assembly-1.3.0-SNAPSHOT
 
-#Keyspace
 
+#===============================================================================================================================
+
+#Keyspace
 
 CREATE KEYSPACE dog WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
 
 #Schemas for the databases
 
-#Master device table 
 
+#===============================================================================================================================
+
+#Master device table 
 
 CREATE TABLE device(device_id text, device_name text, device_type text, channel text, active boolean, user_id text, primary key(device_id,device_type));
 
@@ -28,8 +32,10 @@ CREATE INDEX on dog.device (device_type);
 
 CREATE INDEX on dog.device (channel);
 
-#Table for refrigerator
 
+#===============================================================================================================================
+
+#Table for refrigerator
 
 CREATE TABLE refrigerator(device_id text,device_type text,channel text, date text, time timestamp,temperature double, primary key((device_id,date),time));
 
@@ -45,8 +51,6 @@ CREATE INDEX on dog.refrigerator (date);
 CREATE INDEX on dog.refrigerator (time);
 
 CREATE INDEX on dog.refrigerator (temperature);
-
-
 
 
 #Table for daily statistic analysis for avg temperature (Refrigerator)
@@ -76,6 +80,7 @@ CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (date);
 
 CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (dailyaverageall);
 
+#===============================================================================================================================
 
 #Table for Television
 
@@ -118,4 +123,23 @@ create table dailystatisticstelevisionalldevice(device_type text, date text, dai
 CREATE INDEX on dog.dailystatisticstelevisionalldevice (date);
 
 CREATE INDEX on dog.dailystatisticstelevisionalldevice (dailyusage);
+
+#===============================================================================================================================
+
+# SQL table structure for storing average value
+
+CREATE TABLE dailystatisticsdata (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+device_id VARCHAR(30) NOT NULL,
+date VARCHAR(30) NOT NULL,
+averagevalues DOUBLE(10,2)
+);
+
+
+CREATE TABLE dailystatisticsalldevice (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+device_type VARCHAR(30) NOT NULL,
+date VARCHAR(30) NOT NULL,
+averagevalues DOUBLE(10,2)
+);
 
