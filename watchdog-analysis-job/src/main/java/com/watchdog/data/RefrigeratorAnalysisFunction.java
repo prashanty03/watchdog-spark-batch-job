@@ -34,6 +34,9 @@ public static  void performInitialFridgeTempAnalysis(JavaRDD<String> differentDe
             double meanAvg = 0;
             System.out.println(deviceRow1.count());
             meanAvg = deviceRow1.mapToDouble(x->x).mean();
+            if (Double.isNaN(meanAvg)) {
+                meanAvg =0;
+            }
             java.sql.Connection conn = DBConnection.getInstance().connection;
             String query = "INSERT INTO dailystatisticsdata (device_id, date, averagevalues) VALUES (?,?,?)";
             try {
@@ -74,7 +77,9 @@ public static  void performDailyFridgeTempAnalysis(JavaRDD<String> differentDevi
         if (deviceRow1.count() >0) {
             meanAvg = deviceRow1.mapToDouble(x->x).mean();
         }
-
+        if (Double.isNaN(meanAvg)) {
+            meanAvg =0;
+        }
         java.sql.Connection conn = DBConnection.getInstance().connection;
              String query = "INSERT INTO dailystatisticsdata (device_id, date, averagevalues) VALUES (?,?,?)";
              try {
@@ -174,6 +179,9 @@ public static  void performInitalAllFridgeTempAnalysis(JavaRDD<String> different
     
     }
    avg= avg/(count);
+   if (Double.isNaN(avg)) {
+        avg =0;
+    }
    System.out.println(count);
     System.out.println(avg);
     
