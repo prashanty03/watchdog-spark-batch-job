@@ -19,7 +19,8 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Session;
 
-import com.watchdog.data.RefrigeratorAnalysisFunction;
+import com.watchdog.analysis.RefrigeratorAnalysisFunction;
+import com.watchdog.analysis.TelevisionAnalysisFunction;
 public class WatchDogAnalysis {
 
 public static void main(String[] args) {
