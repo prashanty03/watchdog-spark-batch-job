@@ -4,7 +4,7 @@ Watchdog batch which runs every day to perform the analysis and store the result
 # Spark-Cassandra-Java connector required : spark-cassandra-connector-java-assembly-1.3.0-SNAPSHOT
 
 
-#===============================================================================================================================
+#===============================================================
 
 #Keyspace
 
@@ -13,7 +13,8 @@ CREATE KEYSPACE dog WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replicatio
 #Schemas for the databases
 
 
-#===============================================================================================================================
+#=================================================================
+
 
 #Master device table 
 
@@ -33,7 +34,7 @@ CREATE INDEX on dog.device (device_type);
 CREATE INDEX on dog.device (channel);
 
 
-#===============================================================================================================================
+#================================================================
 
 #Table for refrigerator
 
@@ -80,7 +81,7 @@ CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (date);
 
 CREATE INDEX on dog.dailystatisticsrefrigeratoralldevice (dailyaverageall);
 
-#===============================================================================================================================
+#===============================================================
 
 #Table for Television
 
@@ -124,7 +125,7 @@ CREATE INDEX on dog.dailystatisticstelevisionalldevice (date);
 
 CREATE INDEX on dog.dailystatisticstelevisionalldevice (dailyusage);
 
-#===============================================================================================================================
+#===============================================================
 
 # SQL table structure for storing average value
 
