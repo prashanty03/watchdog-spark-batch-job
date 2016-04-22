@@ -11,6 +11,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Session;
+import com.watchdog.analysis.DBConnection;
 
 public class TelevisionAnalysisFunction {
 	
