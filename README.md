@@ -144,6 +144,12 @@ date VARCHAR(30) NOT NULL,
 averagevalues DOUBLE(10,2)
 );
 
+# Start Cassandra Server
+1. Download the mentioned cassandra version and unzip.
+2. Navigate to the folder and run bin/cassandra -f.
+3. Change directory and navigate to bin folder and execute ./cqlsh to fire the cassandra shell.
+4. Now execute the schemas and table creation queries mentioned above.
+`
 #Run Spark Job 
 1. Run as java application.
 OR
