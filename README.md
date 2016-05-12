@@ -144,3 +144,12 @@ date VARCHAR(30) NOT NULL,
 averagevalues DOUBLE(10,2)
 );
 
+#Run Spark Job 
+1. Run as java application.
+OR
+2. Submit to spark shell.
+./bin/spark-submit \
+  --class org.apache.spark.examples.SparkPi \
+  --master local[8] \
+  /path/to/examples.jar \
+  100
