@@ -149,7 +149,7 @@ averagevalues DOUBLE(10,2)
 OR
 2. Submit to spark shell.
 ./bin/spark-submit \
-  --class org.apache.spark.examples.SparkPi \
+  --class \
   --master local[8] \
   /path/to/examples.jar \
   100
